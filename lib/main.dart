@@ -34,13 +34,14 @@ class RandomWordsState extends State<RandomWords> {
     return ListView.builder(
       padding: const EdgeInsets.all(16.0),
       itemBuilder: (context, i) {
-        /*2*/
+        // ListView의 각 행 앞에 1 픽셀 높이의 구분선 위젯을 추가
         if (i.isOdd) {
           return const Divider();
         }
-        /*3*/
+
         final index = i ~/ 2;
 
+        // 구분선 위젯을 제외한 ListView에 있는 단어 쌍을 모두 사용하고 나면, 10개를 더 생성하고 제안 목록에 추가합니다
         if (index >= _suggestions.length) {
           _suggestions.addAll(generateWordPairs().take(10));
         }
@@ -59,8 +60,7 @@ class RandomWordsState extends State<RandomWords> {
       subtitle: Text(
         wordPair.asPascalCase,
         style: _subtitleTextStyle,
-      ),
-      selectedTileColor: const Color(0x0000000a),
+      )
     );
   }
 }

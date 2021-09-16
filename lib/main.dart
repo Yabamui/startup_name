@@ -16,6 +16,8 @@ class MyApp extends StatelessWidget {
 class RandomWordsState extends State<RandomWords> {
   // Dart 언어에서는 식별자 앞에 밑줄을 붙이면 프라이빗 적용이 됩니다.
   final _suggestions = <WordPair>[];
+  // _saved Set 을 추가해 사용자 즐겨찾기 단어 쌍 저장, Set 중복 항목을 허용하지 않음
+  final _saved = <WordPair>{};
   final _titleTextStyle = const TextStyle(fontSize: 20.0);
   final _subtitleTextStyle = const TextStyle(fontSize: 10.0);
 
@@ -52,6 +54,8 @@ class RandomWordsState extends State<RandomWords> {
   }
 
   Widget _buildRow(WordPair wordPair) {
+    // 이미 즐겨찾기에 추가되어 있지 않은지 확인
+    final alreadySaved = _saved.contains(wordPair);
     return ListTile(
       title: Text(
         wordPair.asPascalCase,
@@ -60,7 +64,12 @@ class RandomWordsState extends State<RandomWords> {
       subtitle: Text(
         wordPair.asPascalCase,
         style: _subtitleTextStyle,
-      )
+      ),
+      // 즐겨찾기 icon 추가
+      trailing: Icon(
+        alreadySaved ? Icons.favorite : Icons.favorite_border,
+        color: alreadySaved ? Colors.red : null,
+      ),
     );
   }
 }
